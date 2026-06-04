@@ -1,0 +1,95 @@
+<div class="costos-wrapper unified-layout">
+  <section class="card unified-card">
+    <div class="card-header">
+      <span class="header-icon">🧠</span>
+      <h2>Asistente de Costos con IA</h2>
+    </div>
+
+    <!-- Sección de carrusel eliminada -->
+
+    <div class="divider-horizontal"></div>
+
+    <!-- Flujo de Diálogo IA -->
+    <div class="chat-section">
+      <div class="section-title-sub">
+        <span>🤖</span> Diálogo Guiado de Producción
+      </div>
+
+      <div class="chat-wrapper">
+        <!-- Estado inactivo: Botón de inicio -->
+        <div class="chat-intro" *ngIf="!dialogActive">
+          <div class="intro-graphic">🤖</div>
+          <h3>Simulador de Diálogo de Costos con IA</h3>
+          <p>Inicia un flujo conversacional guiado de 5 pasos para calcular de manera precisa el costo de producción unitario de tu producto. Todas las preguntas y respuestas se guardarán en la base de datos.</p>
+          <button (click)="startDialog()" class="btn-start">Iniciar Diálogo Guiado</button>
+        </div>
+
+        <!-- Estado activo: Chat de Diálogo -->
+        <div class="chat-active" *ngIf="dialogActive">
+          <!-- Indicador de pasos -->
+          <div class="steps-progress-bar">
+            <div class="step-node" [class.completed]="currentStep > 1" [class.active]="currentStep === 1">
+              <span class="step-num">1</span>
+              <span class="step-label">Producto</span>
+            </div>
+            <div class="step-line" [class.completed]="currentStep > 1"></div>
+
+            <div class="step-node" [class.completed]="currentStep > 2" [class.active]="currentStep === 2">
+              <span class="step-num">2</span>
+              <span class="step-label">Materiales</span>
+            </div>
+            <div class="step-line" [class.completed]="currentStep > 2"></div>
+
+            <div class="step-node" [class.completed]="currentStep > 3" [class.active]="currentStep === 3">
+              <span class="step-num">3</span>
+              <span class="step-label">Consumo</span>
+            </div>
+            <div class="step-line" [class.completed]="currentStep > 3"></div>
+
+            <div class="step-node" [class.completed]="currentStep > 4" [class.active]="currentStep === 4">
+              <span class="step-num">4</span>
+              <span class="step-label">Mano Obra</span>
+            </div>
+            <div class="step-line" [class.completed]="currentStep > 4"></div>
+
+            <div class="step-node" [class.completed]="currentStep > 5" [class.active]="currentStep === 5">
+              <span class="step-num">5</span>
+              <span class="step-label">Indirectos</span>
+            </div>
+          </div>
+
+          <!-- Historial de Chat -->
+          <div class="chat-history">
+            <div *ngFor="let msg of chatHistory" class="chat-bubble-container" [ngClass]="msg.role">
+              <div class="chat-bubble">
+                <span class="bubble-sender">{{ msg.role === 'assistant' ? 'Asistente IA' : 'Tú' }}</span>
+                <p class="bubble-text">{{ msg.text }}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Entrada del Chat -->
+          <div class="chat-input-area" *ngIf="currentStep <= 5">
+            <input type="text"
+                   [(ngModel)]="userInput"
+                   placeholder="Escribe tu respuesta aquí..."
+                   (keyup.enter)="sendResponse()"
+                   class="input-premium"
+                   autofocus>
+            <button (click)="sendResponse()" class="btn-send">Enviar</button>
+          </div>
+
+          <!-- Controles extras del Chat -->
+          <div class="chat-footer-controls">
+            <button (click)="resetDialog()" class="btn-cancel">Reiniciar Diálogo</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- Barra de herramientas global -->
+<div class="global-actions">
+  <button (click)="clearDatabase()" class="btn-danger">Limpiar Base de Datos (SQLite)</button>
+</div>
