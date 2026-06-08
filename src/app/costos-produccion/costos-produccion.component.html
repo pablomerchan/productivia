@@ -7,20 +7,14 @@
 
     <!-- Sección de carrusel eliminada -->
 
-    <div class="divider-horizontal"></div>
-
     <!-- Flujo de Diálogo IA -->
     <div class="chat-section">
-      <div class="section-title-sub">
-        <span>🤖</span> Diálogo Guiado de Producción
-      </div>
-
       <div class="chat-wrapper">
         <!-- Estado inactivo: Botón de inicio -->
         <div class="chat-intro" *ngIf="!dialogActive">
           <div class="intro-graphic">🤖</div>
           <h3>Simulador de Diálogo de Costos con IA</h3>
-          <p>Inicia un flujo conversacional guiado de 5 pasos para calcular de manera precisa el costo de producción unitario de tu producto. Todas las preguntas y respuestas se guardarán en la base de datos.</p>
+          <p>Inicia un flujo conversacional guiado de 6 pasos para calcular de manera precisa el costo de producción unitario de tu producto, incluyendo ganancia. Todas las preguntas y respuestas se guardarán en la base de datos.</p>
           <button (click)="startDialog()" class="btn-start">Iniciar Diálogo Guiado</button>
         </div>
 
@@ -56,6 +50,11 @@
               <span class="step-num">5</span>
               <span class="step-label">Indirectos</span>
             </div>
+            <div class="step-line" [class.completed]="currentStep > 6"></div>
+            <div class="step-node" [class.completed]="currentStep > 6" [class.active]="currentStep === 6">
+              <span class="step-num">6</span>
+              <span class="step-label">Ganancia</span>
+            </div>
           </div>
 
           <!-- Historial de Chat -->
@@ -69,19 +68,49 @@
           </div>
 
           <!-- Entrada del Chat -->
-          <div class="chat-input-area" *ngIf="currentStep <= 5">
+          <div class="chat-input-area" *ngIf="currentStep <= 6">
             <input type="text"
                    [(ngModel)]="userInput"
+                   (ngModelChange)="updateProfitPreview()"
                    placeholder="Escribe tu respuesta aquí..."
                    (keyup.enter)="sendResponse()"
                    class="input-premium"
                    autofocus>
             <button (click)="sendResponse()" class="btn-send">Enviar</button>
           </div>
+          <div class="input-helper" *ngIf="currentStep === 6 && profitPreviewPercent !== null">
+            <strong>{{ profitPreviewPercent }}%</strong> equivale a la ganancia frente al costo total estimado.
+          </div>
+
+          <div class="chat-voice-controls" *ngIf="currentStep <= 6">
+            <button *ngIf="recognitionSupported" (click)="listening ? stopVoiceInput() : startVoiceInput()" class="btn-voice" [disabled]="!recognitionSupported" title="Dictar respuesta">
+              {{ listening ? '⏹️' : '🎤' }}
+            </button>
+            <button *ngIf="speechSupported" (click)="readCurrentQuestion()" class="btn-voice" title="Leer pregunta">
+              🔊
+            </button>
+            <div class="voice-unsupported" *ngIf="!recognitionSupported">
+              Dictado de voz no disponible en este navegador.
+            </div>
+          </div>
 
           <!-- Controles extras del Chat -->
           <div class="chat-footer-controls">
             <button (click)="resetDialog()" class="btn-cancel">Reiniciar Diálogo</button>
+          </div>
+
+          <!-- Gráficas finales de costos -->
+          <div class="chart-grid" *ngIf="currentStep >= 7">
+            <div class="chart-container">
+              <div class="chart-wrapper">
+                <canvas #costosChartCanvas></canvas>
+              </div>
+            </div>
+            <div class="chart-container">
+              <div class="chart-wrapper">
+                <canvas #comparisonChartCanvas></canvas>
+              </div>
+            </div>
           </div>
         </div>
       </div>

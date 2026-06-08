@@ -1,0 +1,106 @@
+/* ============================================================
+   MAIN CONTAINER — Tema claro
+   Antes: background radial-gradient oscuro (#0f172a → #020617), color #f8fafc
+   Ahora: background #F5F5F0 (crema suave), color #1A1A1A
+   ============================================================ */
+.main-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #F5F5F0;
+  color: #1A1A1A;
+  font-family: 'Outfit', 'Inter', sans-serif;
+  overflow-x: hidden;
+}
+
+/* ============================================================
+   HEADER — Tema claro
+   Antes: border-bottom rgba blanco semitransparente
+   Ahora: border-bottom gris claro sólido #E5E7EB
+   ============================================================ */
+.main-header {
+  padding: 2.5rem 1.5rem 1rem 1.5rem;
+  text-align: center;
+  border-bottom: 1px solid #E5E7EB;
+  background: #FFFFFF;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.logo-icon {
+  font-size: 2.5rem;
+  animation: float 4s ease-in-out infinite;
+}
+
+/* ============================================================
+   LOGO TEXT — Tema claro
+   Antes: gradiente azul-índigo sobre fondo oscuro
+   Ahora: verde oscuro sólido #166534, acento verde #16A34A
+   ============================================================ */
+.logo-text {
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  margin: 0;
+  background: linear-gradient(135deg, #16A34A 0%, #15803D 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.logo-text span {
+  background: linear-gradient(135deg, #22C55E 0%, #16A34A 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ============================================================
+   TAGLINE — Tema claro
+   Antes: color #94a3b8 (gris azulado oscuro)
+   Ahora: color #6B7280 (gris medio)
+   ============================================================ */
+.tagline {
+  color: #6B7280;
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0.5rem auto 0 auto;
+}
+
+/* MAIN CONTENT — sin cambios de layout */
+.main-content {
+  flex: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  box-sizing: border-box;
+}
+
+/* ============================================================
+   FOOTER — Tema claro
+   Antes: border-top rgba blanco semitransparente, color #64748b
+   Ahora: border-top #E5E7EB, color #9CA3AF, fondo blanco
+   ============================================================ */
+.main-footer {
+  text-align: center;
+  padding: 1.5rem;
+  color: #9CA3AF;
+  font-size: 0.9rem;
+  border-top: 1px solid #E5E7EB;
+  background: #FFFFFF;
+}
+
+/* ANIMACIÓN — sin cambios */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}

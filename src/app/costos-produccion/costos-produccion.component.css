@@ -1,28 +1,38 @@
+/* ============================================================
+   WRAPPER — sin cambios de layout
+   ============================================================ */
 .costos-wrapper.unified-layout {
   max-width: 800px;
   margin: 0 auto;
 }
 
-/* Estilo de Tarjeta Premium - Glassmorphism */
+/* ============================================================
+   TARJETA PRINCIPAL — Tema claro
+   Antes: glassmorphism oscuro (rgba + backdrop-filter), borde rgba blanco
+   Ahora: fondo blanco sólido #FFFFFF, sombra suave, borde #E5E7EB
+   ============================================================ */
 .card.unified-card {
-  background: rgba(30, 41, 59, 0.45);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #FFFFFF;
+  border: 1px solid #E5E7EB;
   border-radius: 24px;
   padding: 2.2rem;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
 }
 
+/* ============================================================
+   CARD HEADER — Tema claro
+   Antes: border-bottom rgba blanco semitransparente
+   Ahora: border-bottom #E5E7EB
+   ============================================================ */
 .card-header {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  margin-bottom: 1.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #E5E7EB;
   padding-bottom: 0.85rem;
 }
 
@@ -30,46 +40,33 @@
   font-size: 1.6rem;
 }
 
+/* ============================================================
+   CARD HEADER H2 — Tema claro
+   Antes: gradiente blanco → gris claro sobre fondo oscuro
+   Ahora: texto verde oscuro sólido #166534
+   ============================================================ */
 .card-header h2 {
   font-size: 1.4rem;
   font-weight: 700;
-  color: #f1f5f9;
   margin: 0;
-  background: linear-gradient(135deg, #f8fafc 0%, #cbd5e1 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #166534;
+  background: none;
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: #166534;
 }
 
-/* Subtítulos de Secciones */
-.section-title-sub {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #94a3b8;
-  margin-bottom: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  letter-spacing: 0.02em;
-}
-
-/* Divisor Horizontal */
-.divider-horizontal {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08) 20%, rgba(255, 255, 255, 0.08) 80%, transparent);
-  margin: 2rem 0;
-}
-
-/* Carrusel eliminado: estilos removidos */
-
-
-/* Formularios Premium */
+/* ============================================================
+   INPUT PREMIUM — Tema claro
+   Antes: fondo rgba oscuro, texto #f8fafc, borde rgba blanco
+   Ahora: fondo #F9FAFB, texto #1A1A1A, borde #D1D5DB
+   ============================================================ */
 .input-premium {
   flex: 1;
-  background: rgba(15, 23, 42, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #F9FAFB;
+  border: 1px solid #D1D5DB;
   border-radius: 12px;
   padding: 0.7rem 1rem;
-  color: #f8fafc;
+  color: #1A1A1A;
   font-family: inherit;
   font-size: 0.9rem;
   transition: all 0.3s ease;
@@ -77,12 +74,14 @@
 
 .input-premium:focus {
   outline: none;
-  border-color: #6366f1;
-  box-shadow: 0 0 10px rgba(99, 102, 241, 0.25);
-  background: rgba(15, 23, 42, 0.85);
+  border-color: #16A34A;
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.15);
+  background: #FFFFFF;
 }
 
-/* Chat Sección */
+/* ============================================================
+   CHAT SECCIÓN — sin cambios de layout
+   ============================================================ */
 .chat-section {
   display: flex;
   flex-direction: column;
@@ -110,35 +109,46 @@
   animation: float 4s ease-in-out infinite;
 }
 
+/* ============================================================
+   CHAT INTRO TEXTOS — Tema claro
+   Antes: h3 #f1f5f9, p #94a3b8
+   Ahora: h3 #1A1A1A, p #6B7280
+   ============================================================ */
 .chat-intro h3 {
   font-size: 1.2rem;
-  color: #f1f5f9;
+  color: #1A1A1A;
   margin: 0 0 0.5rem 0;
 }
 
 .chat-intro p {
-  color: #94a3b8;
+  color: #6B7280;
   font-size: 0.9rem;
   line-height: 1.5;
   max-width: 420px;
   margin: 0 0 1.25rem 0;
 }
 
+/* ============================================================
+   BOTÓN INICIAR — Tema claro
+   Antes: gradiente púrpura-rosa
+   Ahora: verde sólido #16A34A con hover más oscuro
+   ============================================================ */
 .btn-start {
-  background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
-  color: white;
+  background: linear-gradient(135deg, #16A34A 0%, #15803D 100%);
+  color: #FFFFFF;
   border: none;
   border-radius: 12px;
   padding: 0.75rem 1.75rem;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);
+  box-shadow: 0 4px 15px rgba(22, 163, 74, 0.25);
 }
 
 .btn-start:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(236, 72, 153, 0.45);
+  box-shadow: 0 6px 20px rgba(22, 163, 74, 0.4);
+  background: linear-gradient(135deg, #15803D 0%, #166534 100%);
 }
 
 .chat-active {
@@ -147,16 +157,20 @@
   flex: 1;
 }
 
-/* Progreso Pasos */
+/* ============================================================
+   BARRA DE PROGRESO DE PASOS — Tema claro
+   Antes: fondo rgba oscuro, borde rgba blanco
+   Ahora: fondo #F3F4F6, borde #E5E7EB
+   ============================================================ */
 .steps-progress-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 1.25rem;
-  background: rgba(15, 23, 42, 0.4);
+  background: #F3F4F6;
   padding: 0.6rem 0.85rem;
   border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.03);
+  border: 1px solid #E5E7EB;
 }
 
 .step-node {
@@ -168,54 +182,79 @@
   z-index: 2;
 }
 
+/* ============================================================
+   STEP NUM — Tema claro
+   Antes: fondo rgba blanco, color #94a3b8, borde rgba blanco
+   Ahora: fondo #E5E7EB, color #6B7280, borde #D1D5DB
+   ============================================================ */
 .step-num {
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
-  color: #94a3b8;
+  background: #E5E7EB;
+  color: #6B7280;
   font-size: 0.7rem;
   font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid #D1D5DB;
 }
 
+/* ============================================================
+   STEP LABEL — Tema claro
+   Antes: color #64748b
+   Ahora: color #9CA3AF
+   ============================================================ */
 .step-label {
   font-size: 0.65rem;
-  color: #64748b;
+  color: #9CA3AF;
   font-weight: 500;
   transition: all 0.3s ease;
 }
 
+/* ============================================================
+   STEP ACTIVO — Tema claro
+   Antes: fondo #6366f1 (índigo)
+   Ahora: fondo #16A34A (verde)
+   ============================================================ */
 .step-node.active .step-num {
-  background: #6366f1;
-  color: white;
-  box-shadow: 0 0 10px rgba(99, 102, 241, 0.4);
-  border-color: #818cf8;
+  background: #16A34A;
+  color: #FFFFFF;
+  box-shadow: 0 0 10px rgba(22, 163, 74, 0.35);
+  border-color: #22C55E;
 }
 
 .step-node.active .step-label {
-  color: #cbd5e1;
+  color: #166534;
   font-weight: 700;
 }
 
+/* ============================================================
+   STEP COMPLETADO — Tema claro
+   Antes: fondo #10b981 (esmeralda), borde #34d399
+   Ahora: fondo #22C55E, borde #16A34A
+   ============================================================ */
 .step-node.completed .step-num {
-  background: #10b981;
-  color: white;
-  border-color: #34d399;
+  background: #22C55E;
+  color: #FFFFFF;
+  border-color: #16A34A;
 }
 
 .step-node.completed .step-label {
-  color: #34d399;
+  color: #16A34A;
 }
 
+/* ============================================================
+   STEP LINE — Tema claro
+   Antes: fondo rgba blanco semitransparente
+   Ahora: fondo #E5E7EB
+   ============================================================ */
 .step-line {
   flex: 1;
   height: 2px;
-  background: rgba(255, 255, 255, 0.1);
+  background: #E5E7EB;
   margin: 0 -5px;
   margin-top: -10px;
   position: relative;
@@ -224,14 +263,18 @@
 }
 
 .step-line.completed {
-  background: #10b981;
+  background: #22C55E;
 }
 
-/* Historial Chat */
+/* ============================================================
+   HISTORIAL DE CHAT — Tema claro
+   Antes: fondo rgba oscuro, borde rgba blanco
+   Ahora: fondo #F9FAFB, borde #E5E7EB
+   ============================================================ */
 .chat-history {
   flex: 1;
-  background: rgba(15, 23, 42, 0.55);
-  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: #F9FAFB;
+  border: 1px solid #E5E7EB;
   border-radius: 16px;
   padding: 1.25rem;
   overflow-y: auto;
@@ -262,26 +305,38 @@
   border-radius: 14px;
   font-size: 0.9rem;
   line-height: 1.45;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
 }
 
+/* ============================================================
+   BURBUJA ASISTENTE — Tema claro
+   Antes: fondo rgba blanco 5%, color #f1f5f9, borde izq púrpura
+   Ahora: fondo #FFFFFF, color #1A1A1A, borde izq verde
+   ============================================================ */
 .assistant .chat-bubble {
-  background: rgba(255, 255, 255, 0.05);
-  color: #f1f5f9;
-  border-left: 3px solid #a855f7;
+  background: #FFFFFF;
+  color: #1A1A1A;
+  border-left: 3px solid #16A34A;
   border-top-left-radius: 4px;
+  border: 1px solid #E5E7EB;
+  border-left: 3px solid #16A34A;
 }
 
+/* ============================================================
+   BURBUJA USUARIO — Tema claro
+   Antes: gradiente azul oscuro
+   Ahora: verde sólido #16A34A
+   ============================================================ */
 .user .chat-bubble {
-  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-  color: white;
+  background: linear-gradient(135deg, #16A34A 0%, #15803D 100%);
+  color: #FFFFFF;
   border-top-right-radius: 4px;
 }
 
 .bubble-sender {
   font-size: 0.7rem;
   font-weight: 700;
-  opacity: 0.75;
+  opacity: 0.65;
   display: block;
   margin-bottom: 0.15rem;
 }
@@ -291,16 +346,21 @@
   white-space: pre-line;
 }
 
-/* Chat Input */
+/* CHAT INPUT — sin cambios de layout */
 .chat-input-area {
   display: flex;
   gap: 0.75rem;
   margin-bottom: 0.75rem;
 }
 
+/* ============================================================
+   BOTÓN ENVIAR — Tema claro
+   Antes: gradiente verde esmeralda oscuro
+   Ahora: verde #16A34A más brillante en hover
+   ============================================================ */
 .btn-send {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-  color: white;
+  background: linear-gradient(135deg, #16A34A 0%, #15803D 100%);
+  color: #FFFFFF;
   border: none;
   border-radius: 12px;
   padding: 0.7rem 1.25rem;
@@ -308,13 +368,13 @@
   font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.2);
 }
 
 .btn-send:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
-  background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+  box-shadow: 0 6px 16px rgba(22, 163, 74, 0.35);
+  background: linear-gradient(135deg, #22C55E 0%, #16A34A 100%);
 }
 
 .chat-footer-controls {
@@ -322,10 +382,87 @@
   justify-content: flex-end;
 }
 
+.chat-voice-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  align-items: center;
+}
+
+/* ============================================================
+   BOTÓN VOZ — Tema claro
+   Antes: fondo rgba índigo, borde rgba índigo, color #e2e8f0
+   Ahora: fondo #DCFCE7, borde #BBF7D0, color #166534
+   ============================================================ */
+.btn-voice {
+  background: #DCFCE7;
+  color: #166534;
+  border: 1px solid #BBF7D0;
+  border-radius: 10px;
+  padding: 0.6rem 0.8rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  height: 44px;
+}
+
+.btn-voice:hover:not(:disabled) {
+  background: #BBF7D0;
+  box-shadow: 0 0 8px rgba(22, 163, 74, 0.2);
+  transform: scale(1.05);
+}
+
+.btn-voice:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ============================================================
+   BOTÓN SECUNDARIO — Tema claro
+   Antes: fondo rgba gris oscuro, color #e2e8f0
+   Ahora: fondo #F3F4F6, color #374151
+   ============================================================ */
+.btn-secondary {
+  background: #F3F4F6;
+  color: #374151;
+  border: 1px solid #E5E7EB;
+  border-radius: 12px;
+  padding: 0.65rem 1rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background: #E5E7EB;
+  color: #1A1A1A;
+}
+
+/* ============================================================
+   VOZ NO SOPORTADA — Tema claro
+   Antes: color #f8fafc
+   Ahora: color #6B7280
+   ============================================================ */
+.voice-unsupported {
+  color: #6B7280;
+  font-size: 0.82rem;
+  opacity: 0.85;
+}
+
+/* ============================================================
+   BOTÓN CANCELAR — Tema claro
+   Antes: fondo transparent, color #94a3b8, borde rgba blanco
+   Ahora: fondo transparent, color #9CA3AF, borde #E5E7EB
+   ============================================================ */
 .btn-cancel {
   background: transparent;
-  color: #94a3b8;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #9CA3AF;
+  border: 1px solid #E5E7EB;
   border-radius: 10px;
   padding: 0.45rem 0.85rem;
   font-size: 0.8rem;
@@ -334,22 +471,29 @@
 }
 
 .btn-cancel:hover {
-  background: rgba(255, 255, 255, 0.05);
-  color: #f1f5f9;
-  border-color: rgba(255, 255, 255, 0.2);
+  background: #F3F4F6;
+  color: #374151;
+  border-color: #D1D5DB;
 }
 
-/* Herramientas globales */
+/* ============================================================
+   ACCIONES GLOBALES — sin cambios de layout
+   ============================================================ */
 .global-actions {
   display: flex;
   justify-content: center;
   margin-top: 1.5rem;
 }
 
+/* ============================================================
+   BOTÓN PELIGRO — Tema claro
+   Antes: fondo rgba rojo muy transparente, color #f87171
+   Ahora: fondo #FEF2F2, color #DC2626, borde #FECACA
+   ============================================================ */
 .btn-danger {
-  background: rgba(239, 68, 68, 0.08);
-  color: #f87171;
-  border: 1px solid rgba(239, 68, 68, 0.2);
+  background: #FEF2F2;
+  color: #DC2626;
+  border: 1px solid #FECACA;
   border-radius: 12px;
   padding: 0.6rem 1.25rem;
   font-weight: 600;
@@ -359,13 +503,15 @@
 }
 
 .btn-danger:hover {
-  background: rgba(239, 68, 68, 0.2);
-  color: #ef4444;
-  border-color: #ef4444;
-  box-shadow: 0 0 15px rgba(239, 68, 68, 0.15);
+  background: #FEE2E2;
+  color: #B91C1C;
+  border-color: #FCA5A5;
+  box-shadow: 0 0 15px rgba(220, 38, 38, 0.1);
 }
 
-/* Animaciones */
+/* ============================================================
+   ANIMACIONES — sin cambios
+   ============================================================ */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -384,4 +530,41 @@
   50% {
     transform: translateY(-5px);
   }
+}
+
+/* ============================================================
+   GRÁFICAS — Tema claro
+   Antes: fondo rgba oscuro, borde rgba blanco
+   Ahora: fondo #F9FAFB, borde #E5E7EB
+   ============================================================ */
+.chart-grid {
+  display: grid;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+@media (min-width: 900px) {
+  .chart-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.chart-container {
+  padding: 1.5rem;
+  background: #F9FAFB;
+  border: 1px solid #E5E7EB;
+  border-radius: 16px;
+  animation: fadeIn 0.5s ease;
+}
+
+.chart-wrapper {
+  position: relative;
+  width: 100%;
+  height: 280px;
+}
+
+.chart-wrapper canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
 }
