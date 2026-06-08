@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CostosService, CostoRegistro } from '../services/costos.service';
@@ -74,7 +74,7 @@ export class CostosProduccionComponent implements OnInit, AfterViewInit {
   costChart: Chart | null = null;
   costComparisonChart: Chart | null = null;
 
-  constructor(private costosService: CostosService) {}
+  constructor(private costosService: CostosService, private ngZone: NgZone) {}
 
   ngOnInit(): void {
     this.loadSlides();
@@ -85,8 +85,65 @@ export class CostosProduccionComponent implements OnInit, AfterViewInit {
     // La gráfica se generará cuando se complete el diálogo (step 6)
   }
 
+  // Crea (o recrea) una instancia limpia del SpeechRecognition.
+  // Se llama también al reiniciar para evitar estados corruptos.
+  private buildRecognitionInstance(): any {
+    const SpeechRecognition =
+      (window as any).SpeechRecognition ||
+      (window as any).webkitSpeechRecognition;
+    if (!SpeechRecognition) return null;
+
+    const rec = new SpeechRecognition();
+    rec.lang = 'es-ES';
+    rec.interimResults = false;
+    rec.maxAlternatives = 1;
+    rec.continuous = false;
+
+    // onresult: se ejecuta fuera de la zona Angular → usar ngZone.run()
+    rec.onresult = (event: any) => {
+      let transcript = '';
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        if (event.results[i].isFinal) {
+          transcript += event.results[i][0].transcript;
+        }
+      }
+      this.ngZone.run(() => {
+        if (transcript.trim()) {
+          this.userInput = transcript.trim();
+          console.log('Transcripción capturada:', this.userInput);
+        }
+        this.listening = false;
+      });
+    };
+
+    // onerror: también fuera de zona
+    rec.onerror = (event: any) => {
+      console.error('Error en reconocimiento de voz:', event.error);
+      this.ngZone.run(() => {
+        this.listening = false;
+        // Ignorar el error "no-speech" silenciosamente (usuario no habló)
+        if (event.error !== 'no-speech') {
+          alert(`Error de voz: ${event.error}. Intenta de nuevo.`);
+        }
+      });
+    };
+
+    // onend: siempre asegurar que listening quede en false
+    rec.onend = () => {
+      this.ngZone.run(() => {
+        this.listening = false;
+        console.log('Reconocimiento de voz finalizado.');
+      });
+    };
+
+    return rec;
+  }
+
   private initializeSpeechRecognition(): void {
-    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    const SpeechRecognition =
+      (window as any).SpeechRecognition ||
+      (window as any).webkitSpeechRecognition;
+
     if (!SpeechRecognition) {
       this.recognitionSupported = false;
       console.warn('SpeechRecognition no soportado en este navegador');
@@ -94,64 +151,31 @@ export class CostosProduccionComponent implements OnInit, AfterViewInit {
     }
 
     this.recognitionSupported = true;
-    this.recognition = new SpeechRecognition();
-    this.recognition.language = 'es-ES';
-    this.recognition.interimResults = false;
-    this.recognition.maxAlternatives = 1;
-    this.recognition.continuous = false;
-
-    this.recognition.onstart = () => {
-      this.listening = true;
-      console.log('Reconocimiento de voz iniciado...');
-    };
-
-    this.recognition.onresult = (event: any) => {
-      let transcript = '';
-      for (let i = event.resultIndex; i < event.results.length; i++) {
-        if (event.results[i].isFinal) {
-          transcript += event.results[i][0].transcript;
-        }
-      }
-      if (transcript.trim()) {
-        this.userInput = transcript.trim();
-        console.log('Transcripción capturada:', this.userInput);
-      }
-      this.listening = false;
-    };
-
-    this.recognition.onerror = (event: any) => {
-      console.error('Error en reconocimiento de voz:', event.error);
-      this.listening = false;
-      alert(`Error: ${event.error}. Intenta de nuevo.`);
-    };
-
-    this.recognition.onend = () => {
-      this.listening = false;
-      console.log('Reconocimiento de voz completado');
-    };
+    this.recognition = this.buildRecognitionInstance();
   }
 
   startVoiceInput(): void {
-    if (!this.recognitionSupported || !this.recognition) {
+    if (!this.recognitionSupported) {
       alert('Reconocimiento de voz no soportado en tu navegador');
       return;
     }
     if (this.listening) {
       return;
     }
+
+    // Recrear la instancia siempre para evitar estado inválido tras un uso anterior
+    this.recognition = this.buildRecognitionInstance();
+    if (!this.recognition) return;
+
     try {
       this.listening = true;
       this.recognition.start();
+      console.log('Reconocimiento de voz iniciado...');
     } catch (err) {
       console.error('Error al iniciar reconocimiento de voz:', err);
-      this.listening = false;
-      // Reintentar una sola vez
-      try {
-        this.recognition.abort();
-        setTimeout(() => this.recognition.start(), 500);
-      } catch (retryErr) {
-        console.error('Reintento fallido:', retryErr);
-      }
+      this.ngZone.run(() => {
+        this.listening = false;
+      });
     }
   }
 
@@ -159,8 +183,14 @@ export class CostosProduccionComponent implements OnInit, AfterViewInit {
     if (!this.recognition || !this.listening) {
       return;
     }
-    this.recognition.stop();
-    this.listening = false;
+    try {
+      this.recognition.stop();
+    } catch (err) {
+      console.error('Error al detener reconocimiento de voz:', err);
+    }
+    this.ngZone.run(() => {
+      this.listening = false;
+    });
   }
 
   readCurrentQuestion(): void {
